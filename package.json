@@ -1,0 +1,21 @@
+{
+  "name": "odia-lyrics",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "new": "node scripts/new-song.js",
+    "deploy": "node scripts/deploy.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "ejs": "^7.0.2",
+    "express": "^5.3.0",
+    "gray-matter": "^4.0.3",
+    "marked": "^18.2.1"
+  }
+}

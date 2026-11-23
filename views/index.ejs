@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="or">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ସ୍ୱର ମୂର୍ଚ୍ଛନା</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Oriya:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070709;
+      --surface: #0f0f14;
+      --surface-2: #16161f;
+      --border: rgba(255, 255, 255, 0.15);
+      --border-subtle: rgba(255, 255, 255, 0.09);
+      --border-accent: rgba(246, 178, 68, 0.55);
+      --accent: #f6b244;
+      --accent-soft: #ffe09e;
+      --accent-glow: rgba(246, 178, 68, 0.16);
+      --text: #f7f7fb;
+      --muted: #8f8fa3;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #232330; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(246, 178, 68, 0.5); }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Noto Sans Oriya', sans-serif;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse 80% 42% at 50% -8%, rgba(246, 178, 68, 0.18), transparent 72%),
+        radial-gradient(circle at 12% 28%, rgba(217, 119, 87, 0.07), transparent 45%),
+        radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 26px 26px;
+      color: var(--text);
+      min-height: 100vh;
+      padding: 52px 22px 84px;
+    }
+
+    .container { max-width: 1060px; margin: auto; }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 44px;
+    }
+
+    .odia-title-hero {
+      font-size: clamp(2.4rem, 6.2vw, 3.6rem);
+      font-weight: 800;
+      line-height: 1.52;
+      padding-bottom: 6px;
+      background: linear-gradient(135deg, #ffffff 15%, var(--accent) 70%, var(--accent-soft) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 8px 28px rgba(246, 178, 68, 0.18));
+    }
+
+    .search-box-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin-top: 24px;
+    }
+
+    .search-ico {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 1.05rem;
+      pointer-events: none;
+      transition: color 0.2s ease;
+    }
+
+    .search-box-wrap:focus-within .search-ico { color: var(--accent); }
+
+    .search-input {
+      width: 100%;
+      padding: 16px 22px 16px 46px;
+      background: rgba(15, 15, 20, 0.94);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.96rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .search-input::placeholder { color: var(--muted); }
+
+    .search-input:focus {
+      background: var(--surface-2);
+      border-color: var(--border-accent);
+      box-shadow: 0 0 0 4px rgba(246, 178, 68, 0.1), 0 16px 38px rgba(0, 0, 0, 0.65);
+    }
+
+    .filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin-top: 18px;
+    }
+
+    select {
+      background: rgba(15, 15, 20, 0.92);
+      border: 1px solid var(--border);
+      color: #d6d6e6;
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      outline: none;
+    }
+
+    select:hover, select:focus {
+      color: var(--accent-soft);
+      border-color: var(--border-accent);
+      background: var(--surface-2);
+    }
+
+    .catalog-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      padding: 0 4px 12px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .song-count {
+      color: var(--accent);
+      background: rgba(246, 178, 68, 0.1);
+      border: 1px solid rgba(246, 178, 68, 0.32);
+      padding: 4px 11px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      position: relative;
+      background: linear-gradient(160deg, rgba(26, 26, 36, 0.94) 0%, rgba(12, 12, 17, 0.99) 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+      overflow: hidden;
+      animation: riseIn 0.35s ease backwards;
+      transition: transform 0.24s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.24s ease, box-shadow 0.24s ease;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.24s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-accent);
+      box-shadow: 0 22px 44px rgba(0, 0, 0, 0.72), 0 0 28px var(--accent-glow);
+    }
+
+    .card:hover::before { opacity: 0.95; }
+
+    .song-title {
+      font-size: 1.38rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.5;
+    }
+
+    .card-meta-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .card-meta-list span strong {
+      color: #e2e2ee;
+      font-weight: 600;
+    }
+
+    .card-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .movie-col {
+      color: var(--accent-soft);
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .empty-box {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      background: var(--surface);
+      border: 1px dashed rgba(255, 255, 255, 0.22);
+      border-radius: 20px;
+      color: var(--muted);
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 class="odia-title-hero">ସ୍ୱର ମୂର୍ଚ୍ଛନା</h1>
+
+      <div class="search-box-wrap">
+        <span class="search-ico">⌕</span>
+        <input type="text" id="search" class="search-input" placeholder="Search song, singer, composer, lyricist, movie, or lyrics...">
+      </div>
+
+      <div class="filters">
+        <select id="singerSelect" onchange="filterCards()">
+          <option value="all">Singer: All</option>
+          <% singers.forEach(sg => { %>
+            <option value="<%= sg %>"><%= sg %></option>
+          <% }) %>
+        </select>
+      </div>
+    </header>
+
+    <div class="catalog-head">
+      <span>Songs</span>
+      <span class="song-count" id="visibleCount"><%= songs.length %> <%= songs.length === 1 ? 'Song' : 'Songs' %></span>
+    </div>
+
+    <div class="grid" id="songGrid">
+      <% songs.forEach((s, i) => { %>
+        <a href="/song/<%= s.slug %>" class="card"
+           style="animation-delay: <%= Math.min(i * 35, 280) %>ms"
+           data-singer="<%= s.singer %>"
+           data-search="<%= (s.name + ' ' + s.singer + ' ' + s.composer + ' ' + s.lyricist + ' ' + s.movie + ' ' + s.rawLyrics).toLowerCase() %>">
+          <div class="song-title"><%= s.name %></div>
+
+          <% if (s.singer || s.composer || s.lyricist) { %>
+            <div class="card-meta-list">
+              <% if (s.singer) { %><span>Singer: <strong><%= s.singer %></strong></span><% } %>
+              <% if (s.composer) { %><span>Composer: <strong><%= s.composer %></strong></span><% } %>
+              <% if (s.lyricist) { %><span>Lyricist: <strong><%= s.lyricist %></strong></span><% } %>
+            </div>
+          <% } %>
+
+          <% if (s.movie) { %>
+            <div class="card-foot">
+              <span class="movie-col">Movie: <%= s.movie %></span>
+            </div>
+          <% } %>
+        </a>
+      <% }) %>
+      <div class="empty-box" id="emptyState">No matching songs found.</div>
+    </div>
+  </div>
+
+  <script>
+    const searchInput = document.getElementById('search');
+    const singerSelect = document.getElementById('singerSelect');
+    const cards = Array.from(document.querySelectorAll('.card'));
+    const countEl = document.getElementById('visibleCount');
+    const emptyEl = document.getElementById('emptyState');
+
+    function filterCards() {
+      const q = searchInput.value.trim().toLowerCase();
+      const singer = singerSelect.value;
+      let shown = 0;
+
+      cards.forEach(c => {
+        const matchQ = !q || c.dataset.search.includes(q);
+        const matchS = singer === 'all' || c.dataset.singer === singer;
+        const visible = matchQ && matchS;
+        c.style.display = visible ? 'flex' : 'none';
+        if (visible) shown++;
+      });
+
+      countEl.textContent = `${shown} ${shown === 1 ? 'Song' : 'Songs'}`;
+      emptyEl.style.display = shown === 0 ? 'block' : 'none';
+    }
+
+    searchInput.addEventListener('input', filterCards);
+  </script>
+</body>
+</html>
